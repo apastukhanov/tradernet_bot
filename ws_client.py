@@ -35,7 +35,7 @@ def on_open(ws, bonds):
 
 if __name__ == "__main__":
     
-    bonds = ["TRNFP", "TATNP", "AAPL.SPB", "TATN", "SU52001RMFS3", "SU29011RMFS2", "SU26216RMFS0", "SU26215RMFS2", "SU26212RMFS9", "SU26207RMFS9", "SU25077RMFS7"];
+    bonds = ["TRNFP", "TATNP", "AAPL.SPB", "TATN", "SU52001RMFS3", "SU29011RMFS2", "SU26216RMFS0", "SU26215RMFS2", "SU26212RMFS9", "SU26207RMFS9", "SU25077RMFS7"]
     # websocket.enableTrace(True)
     URL = f'wss://wss.tradernet.ru?SID={get_sid()}'
     ws = websocket.WebSocketApp(URL,
