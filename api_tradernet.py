@@ -16,10 +16,13 @@ def write_to_json(content, filename)->None:
         json.dump(content, f, indent=2, ensure_ascii=False)
 
 
-def mk_request(cmd_:str, params_:Dict={}, isV1=False, filename=None)->None:
+def mk_request(cmd_:str, params_:Dict={}, isV1=False, filename=None,
+               url:str = None)->None:
     res = NtApi.PublicApiClient(pub_, sec_, NtApi.PublicApiClient().V2)
     if isV1:
         res = NtApi.PublicApiClient(pub_, sec_, NtApi.PublicApiClient().V1)
+    if url:
+        res.setApiUrl(url)
     write_to_json(res.sendRequest(cmd_, params_).json(), filename=filename)
 
 
@@ -33,8 +36,22 @@ def search_ticker(search_str: str)->None:
 
 def get_user_data()->None:
     cmd_ = "getOPQ"
-    mk_request(cmd_) 
+    mk_request(cmd_)
     
+
+def get_trade_hist(ticker, from_, to_, timeframe=1440):
+    cmd_   = 'getHloc'
+    params_ = {
+        'id'           : ticker,
+        'count'        : -1,
+        'timeframe'    : timeframe,
+        'date_from'    : from_,
+        'date_to'      : to_,
+        'intervalMode' : 'ClosedRay'
+    }
+    
+    mk_request(cmd_, params_, filename=f'trades_{ticker}') 
+     
 
 def get_session_info()->None:
     cmd_ = "getSidInfo"
@@ -43,7 +60,7 @@ def get_session_info()->None:
     mk_request(cmd_, params_, filename="sid_info") 
 
 
-def get_trades():
+def get_trades()->None:
     """
     Получении истории сделок по пользователю
     """
@@ -55,7 +72,7 @@ def get_trades():
     mk_request(cmd_, params_)
 
 
-def get_sec_info(ticker: str):
+def get_sec_info(ticker: str)->None:
     cmd_ ='getSecurityInfo'
     params_ = {
         'ticker': f'{ticker}',
@@ -64,7 +81,7 @@ def get_sec_info(ticker: str):
     mk_request(cmd_, params_)
 
 
-def get_sec_data(ticker):
+def get_sec_data(ticker)->None:
     cmd_ ='getStockData'
     params_ = {
         'ticker': f'{ticker}',
@@ -73,11 +90,18 @@ def get_sec_data(ticker):
     mk_request(cmd_, params_)
     
 
-def auth():
+def auth()->None:
+    cmd_ = "getSecuritySms"
+    mk_request(cmd_)
+
+    sms_code = input("Введи код из смс: ")
+    sms_code = sms_code.strip()
+    
     cmd_ = "openSecuritySession"
+
     params_ = {
         "safetyTypeId": 3,
-        "validationKey": "745166"
+        "validationKey": f"{sms_code}"
     }
     
     mk_request(cmd_, params_)
@@ -87,6 +111,7 @@ if __name__=="__main__":
     # auth()
     # get_trades()
     # search_ticker("AAPL")
-    get_sec_data("AAPL")
-    get_session_info()
-    # get_user_data()
+    # get_sec_data("AAPL")
+    # get_session_info()
+    # get_user_data() 
+    get_trade_hist("FB.US", "15.08.2020 00:00", "16.08.2020 00:00")
