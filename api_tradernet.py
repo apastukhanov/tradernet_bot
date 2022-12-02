@@ -1,3 +1,4 @@
+from datetime import datetime
 import json
 import os
 
@@ -45,10 +46,12 @@ def get_trade_hist(ticker, from_, to_, timeframe=1440):
         'id'           : ticker,
         'count'        : -1,
         'timeframe'    : timeframe,
-        'date_from'    : from_,
-        'date_to'      : to_,
+        'date_from'    : datetime.strftime(from_, "%d.%m.%Y %H:%M"),
+        'date_to'      : datetime.strftime(to_, "%d.%m.%Y %H:%M"),
         'intervalMode' : 'ClosedRay'
     }
+    
+    print(params_)
     
     mk_request(cmd_, params_, filename=f'trades_{ticker}') 
      
@@ -114,4 +117,6 @@ if __name__=="__main__":
     # get_sec_data("AAPL")
     # get_session_info()
     # get_user_data() 
-    get_trade_hist("FB.US", "15.08.2020 00:00", "16.08.2020 00:00")
+    get_trade_hist("SBER", 
+                   from_=datetime(2022, 8, 15), 
+                   to_=datetime(2022, 8, 16))

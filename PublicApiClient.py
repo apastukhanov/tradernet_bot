@@ -30,7 +30,7 @@ class PublicApiClient:
         :param apiSecret:
         :param version:
         """
-        self.__apiUrl = 'https://tradernet.ru/api' 
+        self.__apiUrl = 'https://tradernet.global/api' 
         self.__version = version
         self.__apiKey = apiKey
         self.__apiSecret = apiSecret
