@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "tradernet"
+version = "0.1.0"
+description = ""
+authors = ["a.pastukhanov"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.5.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

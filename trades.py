@@ -51,4 +51,4 @@ def mk_df_from_json(ticker: str, df_json: Dict=None):
     return df 
     
     
-print(mk_df_from_json('SBER'))
+print(mk_df_from_json('MUM132_0007.KZ'))

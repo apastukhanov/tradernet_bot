@@ -46,14 +46,14 @@ def get_trade_hist(ticker, from_, to_, timeframe=1440):
         'id'           : ticker,
         'count'        : -1,
         'timeframe'    : timeframe,
+        # "date_from"    : '16.08.2020 00:00',
+        # "date_to"      : '17.08.2020 00:00',
         'date_from'    : datetime.strftime(from_, "%d.%m.%Y %H:%M"),
         'date_to'      : datetime.strftime(to_, "%d.%m.%Y %H:%M"),
         'intervalMode' : 'ClosedRay'
     }
     
-    print(params_)
-    
-    mk_request(cmd_, params_, filename=f'trades_{ticker}') 
+    mk_request(cmd_, params_, filename=f'trades_{ticker}', isV1=True) 
      
 
 def get_session_info()->None:
@@ -113,10 +113,10 @@ def auth()->None:
 if __name__=="__main__":
     # auth()
     # get_trades()
-    # search_ticker("AAPL")
+    search_ticker("MUM132_0007")
     # get_sec_data("AAPL")
     # get_session_info()
     # get_user_data() 
-    get_trade_hist("SBER", 
-                   from_=datetime(2022, 8, 15), 
-                   to_=datetime(2022, 8, 16))
+    get_trade_hist("MUM132_0007.KZ", 
+                   from_=datetime(2022, 8, 23), 
+                   to_=datetime(2022, 12, 31))
