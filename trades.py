@@ -62,7 +62,7 @@ def merge_json_files() -> None:
         print(file)
         df_tmp = mk_df_from_json(file[:-5])
         df = pd.concat([df, df_tmp], ignore_index=True)
-    df.to_csv('output/all_trades.csv', index=False)
+    df.to_csv('output/all_trades.csv', index=False, encoding='cp1251')
 
 
 if __name__=='__main__':
