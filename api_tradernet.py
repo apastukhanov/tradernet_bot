@@ -123,7 +123,11 @@ def download_bonds(bonds: List[str]=None) -> None:
         get_trade_hist(ticker,
                        from_=datetime(2019, 1, 1),
                        to_=datetime(2022, 12, 31))
+        
 
+def read_list_gov_bond():
+    df = pd.read_csv('list_gov_bonds_KZ.txt', sep='\t', encoding='cp1251')
+    return df.loc[df['Ticker'].notnull(),'Ticker'].values
 
 if __name__=="__main__":
     # auth()
@@ -141,4 +145,6 @@ if __name__=="__main__":
     #  'MUM144_0009', 'MUM156_0002', 'MUM156_0005', 'MUM156_0006', 'MUM168_0003',
     #  'MUM168_0005', 'MUM180_0011', 'MUM180_0012', 'MUM240_0001', 'OM_01_2908',
     #  'TR_01_2408', 'TR_02_2904', 'US_04_2908'])
-    merge_json_files()
+    l = read_list_gov_bond()
+    print(l)
+    download_bonds(l)
